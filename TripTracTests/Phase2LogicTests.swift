@@ -4,6 +4,7 @@ import XCTest
 private struct Fake: Schedulable {
     var id = UUID()
     var title = "x"
+    var place = ""
     var startsAt: Date?
     var endsAt: Date?
     var status: BookingStatus = .planned

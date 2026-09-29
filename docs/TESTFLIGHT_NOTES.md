@@ -12,3 +12,8 @@ No build uploaded yet. Cumulative so far:
 - Test on device: open Day map on a day with places (pins need network — check they look right, vague places
   like "restaurant near Airbnb" will be approximate); tap Issues and compare with your real plan; add a cost
   in yen to two items and check Budget split; on trip days the Today card should show Now/Next.
+- Phase 5: Settings (Trips → + → Settings): "I'm traveling as" + reminders (allow notifications when asked);
+  widget "Next up" (long-press home screen → add widget); trip menu → Share or back up (image card, text, .ics,
+  JSON backup — restore via Trips → + → Import file).
+- Test on device: turn reminders on, add an item 2 hours from now and see the notification; add the widget and
+  confirm it matches the next item; export .ics and open in Calendar; back up then delete + restore a test trip.

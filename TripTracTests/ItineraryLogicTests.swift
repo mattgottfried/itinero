@@ -12,6 +12,7 @@ private struct Fake: Schedulable {
     var timeZoneID = ""
     var id = UUID()
     var title = ""
+    var place = ""
     var isDone = false
     var cost: Double?
     var currency = ""

@@ -15,6 +15,7 @@ struct TripDetailView: View {
     @State private var showingAdd = false
     @State private var showingTravelers = false
     @State private var showingInfo = false
+    @State private var showingShare = false
     @State private var search = ""
     @State private var undoDraft: ItemDraft?
     @State private var undoMessage = ""
@@ -93,6 +94,7 @@ struct TripDetailView: View {
                     Button("Add to itinerary", systemImage: "plus") { showingAdd = true }
                     Button("Travelers", systemImage: "person.2") { showingTravelers = true }
                     Button("Trip info & notes", systemImage: "info.circle") { showingInfo = true }
+                    Button("Share or back up…", systemImage: "square.and.arrow.up") { showingShare = true }
                 } label: { Image(systemName: "ellipsis.circle") }
                     .accessibilityLabel("Trip actions")
             }
@@ -101,6 +103,7 @@ struct TripDetailView: View {
         .sheet(item: $editing) { ItemEditorView(trip: trip, item: $0) }
         .sheet(isPresented: $showingTravelers) { TravelersView(trip: trip) }
         .sheet(isPresented: $showingInfo) { TripInfoView(trip: trip) }
+        .sheet(isPresented: $showingShare) { ShareTripView(trip: trip) }
         .navigationDestination(item: $openItem) { ItemDetailView(item: $0, trip: trip) }
         .navigationDestination(item: $section) { destination(for: $0) }
         .overlay(alignment: .bottom) {

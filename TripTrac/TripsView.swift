@@ -10,6 +10,7 @@ struct TripsView: View {
     @State private var report: ImportReport?
     @State private var importError: String?
     @State private var tripToDelete: Trip?
+    @State private var showingSettings = false
 
     private static let seedName = "japan-2026"
     private var seedURL: URL? { Bundle.main.url(forResource: Self.seedName, withExtension: "json") }
@@ -30,12 +31,14 @@ struct TripsView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Plan a trip", systemImage: "plus") { showingAddTrip = true }
-                        Button("Import itinerary file…", systemImage: "square.and.arrow.down") { showingImporter = true }
+                        Button("Import file…", systemImage: "square.and.arrow.down") { showingImporter = true }
+                        Button("Settings", systemImage: "gearshape") { showingSettings = true }
                     } label: { Image(systemName: "plus") }
                         .accessibilityLabel("Add or import a trip")
                 }
             }
             .sheet(isPresented: $showingAddTrip) { TripEditorView() }
+            .sheet(isPresented: $showingSettings) { SettingsView() }
             .sheet(item: $report) { ImportReportView(report: $0) }
             .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.json]) { result in
                 switch result {
@@ -106,6 +109,15 @@ struct TripsView: View {
     private func importFile(at url: URL) {
         do {
             let data = try Data(contentsOf: url)
+            // A TripTrac backup restores as-is; anything else is treated as an itinerary-site export.
+            if let snapshot = try? TripSnapshot.decode(data) {
+                if let trip = snapshot.insert(into: modelContext, existing: trips) {
+                    report = ImportReport(tripName: trip.name, itemCount: snapshot.items.count, warnings: [])
+                } else {
+                    importError = "“\(snapshot.name)” is already in your trips, so nothing was restored."
+                }
+                return
+            }
             let parsed = try SiteImporter.parse(data)
             if let existing = ImportApplier.existingTrip(matching: parsed, in: trips) {
                 importError = "“\(existing.name)” is already in your trips, so nothing was imported."
