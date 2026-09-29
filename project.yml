@@ -42,7 +42,7 @@ targets:
         PRODUCT_NAME: Itinero
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Itinero
+        INFOPLIST_KEY_CFBundleDisplayName: Passagio
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
@@ -55,6 +55,7 @@ targets:
     platform: iOS
     sources:
       - Shared/NextUpSnapshot.swift
+      - Shared/AppName.swift
       - ItineroWidget
     entitlements:
       path: ItineroWidget/ItineroWidget.entitlements
@@ -63,7 +64,7 @@ targets:
     info:
       path: ItineroWidget/Info.plist
       properties:
-        CFBundleDisplayName: Itinero
+        CFBundleDisplayName: Passagio
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:

@@ -126,7 +126,7 @@ struct TripsView: View {
             let trip = ImportApplier.apply(parsed, into: modelContext)
             report = ImportReport(tripName: trip.name, itemCount: parsed.items.count, warnings: parsed.warnings)
         } catch {
-            importError = "The file isn't a Itinero itinerary export. (\(error.localizedDescription))"
+            importError = "That file isn't an itinerary export or backup from \(AppName.display). (\(error.localizedDescription))"
         }
     }
 }

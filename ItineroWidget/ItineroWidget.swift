@@ -54,7 +54,7 @@ struct NextUpView: View {
                 Spacer(minLength: 0)
             }
         } else {
-            Text("Open Itinero to load your trip").font(.caption).foregroundStyle(.secondary)
+            Text("Open \(AppName.display) to load your trip").font(.caption).foregroundStyle(.secondary)
         }
     }
 

@@ -1,4 +1,9 @@
-# Itinero
+# Passagio
+
+**Naming:** the app is called **Passagio** (home screen / App Store). Internal names stay `itinero` — bundle IDs
+`com.matt.itinero`(+`.widget`), module/folders, iCloud container, repo — so the name can change again without
+re-registering IDs. User-visible strings use `AppName.display` (`Shared/AppName.swift`); the store name is set in App
+Store Connect. Earlier names TripTrac and Itinero were taken.
 
 Native iOS app (SwiftUI + SwiftData, iOS 17+) for planning and tracking trips and their itineraries —
 both cruises and land trips. First real use: a 7-person family trip to Japan, Nov 13–27 2026.
