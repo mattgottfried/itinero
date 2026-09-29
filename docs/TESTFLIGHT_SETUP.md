@@ -1,4 +1,4 @@
-# Getting Itinero onto TestFlight
+# Getting Passagio onto TestFlight
 
 State: the app archived and exported with **App Store distribution signing** (team X796Z5UW4P, iCloud/CloudKit,
 App Group, push, widget) under its previous name. After the rename to Itinero the new App IDs still have to be
@@ -8,7 +8,7 @@ writes `build/release/export/Itinero.ipa`. Uploading needs your Apple login too.
 
 ## One-time: create the app record
 1. https://appstoreconnect.apple.com → Apps → **+** → New App.
-2. Platform iOS · Name **Itinero** (or similar if taken) · Primary language English · Bundle ID
+2. Platform iOS · Name **Passagio** (names are global; if taken, any name works — it need not match the bundle ID) · Primary language English · Bundle ID
    **com.matt.itinero** (registered automatically by the first signed build — if it isn't in the list, run `tools/release.sh` first) · SKU `itinero`.
 
 ## Upload a build (pick one)
