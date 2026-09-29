@@ -207,7 +207,7 @@ final class CloudSync: ObservableObject {
         var touched: [UUID: Set<String>] = [:]
 
         for record in ordered {
-            guard let (type, id) = CloudRecords.parse(record.recordID.recordName),
+            guard let (type, _) = CloudRecords.parse(record.recordID.recordName),
                   let tripID = CloudRecords.tripID(zone: record.recordID.zoneID) else { continue }   // e.g. the CKShare record
             let key = tripID.uuidString
             guard !state.tombstones.contains(key) else { continue }
