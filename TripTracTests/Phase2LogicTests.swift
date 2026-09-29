@@ -136,7 +136,7 @@ final class Phase2LogicTests: XCTestCase {
 
     func testSearchIgnoresCaseAccentsAndNeedsAllWords() {
         XCTAssertTrue(SearchLogic.matches("pokemon cafe", in: ["Pokémon Café", "Tokyo"]))
-        XCTAssertTrue(SearchLogic.matches("hbjity", in: ["Flight", "Conf HBJITY"]))
+        XCTAssertTrue(SearchLogic.matches("abc123", in: ["Flight", "Conf ABC123"]))
         XCTAssertFalse(SearchLogic.matches("ramen osaka", in: ["Ramen", "Tokyo"]))
         XCTAssertTrue(SearchLogic.matches("  ", in: ["anything"]))
     }

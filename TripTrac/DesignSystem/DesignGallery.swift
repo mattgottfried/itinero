@@ -14,7 +14,7 @@ import SwiftUI
             }
             ListRowCard(tone: .good, tile: .symbol("airplane"), title: "Delta 121 MSP → HND",
                         subtitle: "Booked", subtitleSymbol: "checkmark.seal.fill", subtitleTone: .good, featured: true,
-                        accessibilityValue: "Booked", accessibilityHint: "Open item") { Text("Nov 14 · 10:40 AM · Conf HBJITY") }
+                        accessibilityValue: "Booked", accessibilityHint: "Open item") { Text("Nov 14 · 10:40 AM · Conf ABC123") }
             ListRowCard(tone: .alert, tile: .number("46", unit: "days"), title: "Tokyo Disneyland",
                         subtitle: "Needs booking", subtitleSymbol: "exclamationmark.circle", subtitleTone: .alert,
                         accessibilityValue: "Needs booking", accessibilityHint: "Open item") { Text("Nov 18 · 8:00 AM") }
