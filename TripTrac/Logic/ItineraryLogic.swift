@@ -3,6 +3,12 @@ import Foundation
 /// The slice of an itinerary item that ordering, filtering and summaries need.
 /// Keeps this logic free of SwiftData so tests can use plain structs.
 protocol Schedulable {
+    var id: UUID { get }
+    var title: String { get }
+    var isDone: Bool { get }
+    var cost: Double? { get }
+    var currency: String { get }
+    var isPaid: Bool { get }
     var startsAt: Date? { get }
     var endsAt: Date? { get }
     var status: BookingStatus { get }
@@ -65,12 +71,27 @@ enum ItineraryLogic {
     /// First timed, not-yet-done item at or after `now` (or still running).
     static func nextUp<T: Schedulable>(_ items: [T], now: Date) -> T? {
         items
-            .filter { $0.status != .done && $0.status != .cancelled }
+            .filter { !$0.isDone && $0.status != .done && $0.status != .cancelled }
             .compactMap { item -> (T, Date)? in
                 guard let start = item.startsAt else { return nil }
                 let effectiveEnd = item.endsAt ?? start
                 return effectiveEnd >= now ? (item, start) : nil
             }
             .min { $0.1 < $1.1 }?.0
+    }
+
+    enum RunState: Equatable { case upcoming, happeningNow, past }
+
+    /// Items with an end time run until then; instant items count as "now" for an hour after they start.
+    static func runState(_ item: some Schedulable, now: Date) -> RunState {
+        guard let start = item.startsAt else { return .upcoming }
+        let end = item.endsAt.flatMap { $0 > start ? $0 : nil } ?? start.addingTimeInterval(3600)
+        if now < start { return .upcoming }
+        return now <= end ? .happeningNow : .past
+    }
+
+    static func progress<T: Schedulable>(_ items: [T]) -> (done: Int, total: Int) {
+        let counted = items.filter { $0.status != .cancelled }
+        return (counted.filter(\.isDone).count, counted.count)
     }
 }

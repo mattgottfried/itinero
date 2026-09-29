@@ -253,3 +253,38 @@ struct UndoToast: View {
         .sensoryFeedback(.impact(weight: .light), trigger: message)
     }
 }
+
+// MARK: - Hub tile
+
+/// A compact "jump to" card for a trip's hub: one glanceable number and what it counts.
+struct HubTile: View {
+    let title: String
+    let value: String
+    let systemImage: String
+    var tone: StatusTone = .info
+    let action: () -> Void
+    private let theme = AppTheme.standard
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 10) {
+                StatusTile(tone: tone, content: .symbol(systemImage), size: 40)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(value).font(.headline.monospacedDigit()).lineLimit(1).minimumScaleFactor(0.7)
+                    Text(title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 10).padding(.vertical, 8)
+            .background(theme.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .shadow(color: .black.opacity(theme.cardShadowOpacity), radius: 6, x: 0, y: 2)
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityValue(value)
+        .accessibilityHint("Opens \(title)")
+        .accessibilityAddTraits(.isButton)
+    }
+}

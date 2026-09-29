@@ -7,6 +7,6 @@ struct TripTracApp: App {
         WindowGroup {
             TripsView()
         }
-        .modelContainer(for: [Trip.self, Day.self, Traveler.self, ItineraryItem.self])
+        .modelContainer(for: [Trip.self, Day.self, Traveler.self, ItineraryItem.self, ChecklistItem.self])
     }
 }

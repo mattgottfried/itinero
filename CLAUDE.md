@@ -39,6 +39,15 @@ Both are living documents: extend, don't replace.
   relationships, stable `id`, no unique constraints) because Phase 4 shares trips via CloudKit.
   `ItemDraft` is the value copy used by the editor and by delete-with-undo. `ImportApplier` writes a
   `ParsedTrip` into the store (a trip with the same name + start date counts as already imported).
+- Phase 2 logic (all pure + tested in `Phase2LogicTests`): `ScheduleIssues` (overlaps between travelers who share
+  an item, booked stay without check-out), `BudgetLogic` (per-currency totals, cost split across attendees),
+  `BookingGroups` (urgent/later/undated), `MapLinks` + `LinkNormalizer`, `SearchLogic`, `TimeDisplay` (item time vs
+  "your time", friendly zone names), `PortLogic` (all-aboard alert tone), `ItineraryLogic.runState/progress`.
+- `isDone` is a flag independent of `BookingStatus` (a booked item stays booked when it's done).
+- Map pins: `DayMapView` finds coordinates with `MKLocalSearch` and caches them on the item; editing the place
+  clears the cache. They are approximate by nature — the UI says so.
+- Trip hub tiles open sections via `TripSection` + `navigationDestination(item:)`; lists use Buttons (not tap
+  gestures) so rows are real buttons for VoiceOver.
 - Views: `TripsView` (list, import), `TripDetailView` (day timeline, traveler filter chips),
   `Views/ItemEditorView`, `Views/TravelersView`, `Views/ImportReportView`.
 - Personal itinerary: `private/japan-2026.json` (git-ignored) is bundled into local builds if present and
@@ -50,7 +59,7 @@ Both are living documents: extend, don't replace.
 
 0. Foundation (repo, design system, tests) ✅
 1. Core model + Japan itinerary import ✅ (import from the public italiatrois.netlify.app page)
-2. Trip-day features: who's-where filter, needs-booking tracker, maps, checklist, budget, cruise support
+2. Trip-day features ✅ (needs-booking tracker, item detail, bookings wallet, issues, maps, checklist, budget, cruise fields, trip notes/links, today card, done, search, your-time)
 3. TestFlight #1 (check Xcode beta vs. release before upload)
 4. Family sharing (approach TBD: CloudKit sharing / hosted backend / read-only)
 5. Notifications, widget, share card, export

@@ -6,3 +6,9 @@ No build uploaded yet. Cumulative so far:
   add/edit/delete items with undo; booked / needs-booking status; travelers list.
 - Test on device: load the Japan 2026 itinerary from the empty state, tap each traveler chip, edit an item,
   delete + undo, check the "things to check" import report against the real bookings.
+- Phase 2: hub tiles on each trip (To book, Bookings, Checklist, Budget, Day map, Issues); item detail with
+  Open in Maps / transit directions / copy address / copy confirmation; swipe right = Done; search bar;
+  "your time" line for items in another time zone; cost + links on items; checklist; cruise ship/cabin + all-aboard.
+- Test on device: open Day map on a day with places (pins need network — check they look right, vague places
+  like "restaurant near Airbnb" will be approximate); tap Issues and compare with your real plan; add a cost
+  in yen to two items and check Budget split; on trip days the Today card should show Now/Next.
