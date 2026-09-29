@@ -21,6 +21,9 @@ final class Trip {
     var kindRaw = TripKind.land.rawValue
     var notes = ""
     var timeZoneID = TimeZone.current.identifier
+    /// Family sharing (Phase 4). Opt-in per trip; `cloudOwnerName` is "" for trips I own, else the owner's CloudKit name.
+    var cloudSync = false
+    var cloudOwnerName = ""
     var cruiseLine = ""
     var shipName = ""
     var cabin = ""

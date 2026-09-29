@@ -53,6 +53,14 @@ Both are living documents: extend, don't replace.
   `ReminderPlanner` (pure) plans local notifications (max 60 pending); `Services/AppSync` writes the widget feed
   (`Shared/NextUpSnapshot.swift`, read by the `TripTracWidget` extension via the `group.com.matt.triptrac`
   App Group) and schedules reminders every 30 s / on foreground. "I'm traveling as" (Settings) filters both.
+- Phase 4 (family sharing, opt-in per trip): SwiftData can't share across iCloud accounts, so trips are mirrored to
+  CloudKit with `CKSyncEngine` (`Services/CloudSync`): one record zone per trip, records Trip/Traveler/Day/Item/Check
+  (`Logic/CloudRecords` — pure mapping, fingerprints, diff plan, last-writer-wins; tested), trip record shared via
+  `CKShare`. Local edits are detected by diffing content fingerprints (`reconcile()`, every 30 s) — SwiftData has no
+  change hooks. Remote records apply through `Models/CloudApply` (upserts by id). Rules: remote changes never delete a
+  whole trip; an ended share keeps the local copy; deleting a trip here tombstones it and never deletes the shared
+  copy; only records previously synced can be deleted by sync. Coordinates (map-pin cache) never sync.
+  **Not yet verified end-to-end** (needs two iCloud accounts on real devices) — see docs/FAMILY_SHARING_TEST.md.
 - Signing: automatic, team X796Z5UW4P. Capabilities (iCloud/CloudKit container `iCloud.com.matt.triptrac`, App
   Group, push) are in `TripTrac.entitlements`; a new extension's bundle ID only registers after its parent App ID
   exists (build the app once with `-allowProvisioningUpdates` first).
@@ -69,5 +77,5 @@ Both are living documents: extend, don't replace.
 1. Core model + Japan itinerary import ✅ (import from the public italiatrois.netlify.app page)
 2. Trip-day features ✅ (needs-booking tracker, item detail, bookings wallet, issues, maps, checklist, budget, cruise fields, trip notes/links, today card, done, search, your-time)
 3. TestFlight #1 (check Xcode beta vs. release before upload)
-4. Family sharing (approach TBD: CloudKit sharing / hosted backend / read-only)
+4. Family sharing ✅ built (CloudKit + CKSyncEngine); two-device verification pending
 5. Notifications, widget, share card, export ✅

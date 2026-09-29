@@ -7,3 +7,4 @@ xcuserdata/
 # Personal trip data (confirmation numbers etc.) never goes in the repo
 /private/
 TripTracWidget/Info.plist
+TripTrac/Info.plist
