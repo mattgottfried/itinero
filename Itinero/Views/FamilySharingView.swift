@@ -43,7 +43,7 @@ struct FamilySharingView: View {
                         .disabled(busy || !accountOK)
                         if busy { ProgressView() }
                     } footer: {
-                        Text("Everyone needs an iCloud account and TripTrac installed (TestFlight). Send the invite link from the share sheet.")
+                        Text("Everyone needs an iCloud account and Itinero installed (TestFlight). Send the invite link from the share sheet.")
                     }
                 }
 

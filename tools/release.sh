@@ -1,5 +1,5 @@
 #!/bin/bash
-# Archive, export and (optionally) upload TripTrac to App Store Connect / TestFlight.
+# Archive, export and (optionally) upload Itinero to App Store Connect / TestFlight.
 #
 #   tools/release.sh            archive + export an .ipa into build/ (no upload)
 #   tools/release.sh --upload   also upload, using an App Store Connect API key:
@@ -17,12 +17,12 @@ if [[ -n "${ASC_KEY_PATH:-}" ]]; then
   AUTH=(-authenticationKeyPath "$ASC_KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID")
 fi
 
-xcodebuild archive -project TripTrac.xcodeproj -scheme TripTrac -configuration Release \
-  -destination 'generic/platform=iOS' -archivePath "$OUT/TripTrac.xcarchive" -allowProvisioningUpdates "${AUTH[@]}"
+xcodebuild archive -project Itinero.xcodeproj -scheme Itinero -configuration Release \
+  -destination 'generic/platform=iOS' -archivePath "$OUT/Itinero.xcarchive" -allowProvisioningUpdates "${AUTH[@]}"
 
 DEST=export; [[ "${1:-}" == "--upload" ]] && DEST=upload
 sed "s|<string>export</string>|<string>$DEST</string>|" tools/ExportOptions.plist > "$OUT/ExportOptions.plist"
-xcodebuild -exportArchive -archivePath "$OUT/TripTrac.xcarchive" -exportPath "$OUT/export" \
+xcodebuild -exportArchive -archivePath "$OUT/Itinero.xcarchive" -exportPath "$OUT/export" \
   -exportOptionsPlist "$OUT/ExportOptions.plist" -allowProvisioningUpdates "${AUTH[@]}"
 
-[[ "$DEST" == "export" ]] && echo "IPA: $OUT/export/TripTrac.ipa  (upload with Transporter, or rerun with --upload)"
+[[ "$DEST" == "export" ]] && echo "IPA: $OUT/export/Itinero.ipa  (upload with Transporter, or rerun with --upload)"

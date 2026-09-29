@@ -6,5 +6,5 @@ xcuserdata/
 *.xcodeproj
 # Personal trip data (confirmation numbers etc.) never goes in the repo
 /private/
-TripTracWidget/Info.plist
-TripTrac/Info.plist
+ItineroWidget/Info.plist
+Itinero/Info.plist

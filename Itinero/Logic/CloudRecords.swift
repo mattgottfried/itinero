@@ -43,7 +43,7 @@ struct SyncPlan: Equatable {
 }
 
 enum CloudRecords {
-    static let container = "iCloud.com.matt.triptrac"
+    static let container = "iCloud.com.matt.itinero"
 
     // MARK: Names
 

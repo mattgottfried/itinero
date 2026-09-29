@@ -1,5 +1,5 @@
 import XCTest
-@testable import TripTrac
+@testable import Itinero
 
 final class TripLogicTests: XCTestCase {
     private var cal: Calendar = {

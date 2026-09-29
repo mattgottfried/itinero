@@ -196,14 +196,14 @@ extension TripSnapshot {
         trip.id = id
         trip.cruiseLine = cruiseLine; trip.shipName = shipName; trip.cabin = cabin; trip.linkURLs = linkURLs
         context.insert(trip)
-        var people: [UUID: TripTrac.Traveler] = [:]
+        var people: [UUID: Itinero.Traveler] = [:]
         for t in travelers {
-            let m = TripTrac.Traveler(name: t.name, team: t.team); m.id = t.id; m.trip = trip
+            let m = Itinero.Traveler(name: t.name, team: t.team); m.id = t.id; m.trip = trip
             context.insert(m); people[t.id] = m
         }
-        var dayMap: [UUID: TripTrac.Day] = [:]
+        var dayMap: [UUID: Itinero.Day] = [:]
         for d in days {
-            let m = TripTrac.Day(date: d.date, title: d.title); m.id = d.id; m.trip = trip
+            let m = Itinero.Day(date: d.date, title: d.title); m.id = d.id; m.trip = trip
             context.insert(m); dayMap[d.id] = m
         }
         for i in items {

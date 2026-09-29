@@ -1,5 +1,5 @@
 import XCTest
-@testable import TripTrac
+@testable import Itinero
 
 /// Sanity-checks the real (git-ignored) itinerary export when it exists on this machine.
 final class RealItineraryTests: XCTestCase {

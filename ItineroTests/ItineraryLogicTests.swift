@@ -1,5 +1,5 @@
 import XCTest
-@testable import TripTrac
+@testable import Itinero
 
 private struct Fake: Schedulable {
     var startsAt: Date?

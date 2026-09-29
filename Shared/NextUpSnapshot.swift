@@ -19,7 +19,7 @@ struct NextUpSnapshot: Codable, Equatable {
     var generatedAt: Date
     var entries: [Entry]
 
-    static let appGroup = "group.com.matt.triptrac"
+    static let appGroup = "group.com.matt.itinero"
     static let fileName = "nextup.json"
 
     static var fileURL: URL? {

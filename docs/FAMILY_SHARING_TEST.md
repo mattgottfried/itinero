@@ -6,7 +6,7 @@ two iCloud accounts. Do this once before relying on it for the Japan trip.
 1. Both phones: same TestFlight build, signed in to iCloud, iCloud Drive on.
 2. Phone A (owner): open a **test copy** of a trip (not Japan yet) → ⋯ → Family sharing → Turn on & invite family →
    send the link to Phone B (Messages/AirDrop).
-3. Phone B: tap the link → TripTrac opens and the trip appears in Trips ("Shared with you"). Within ~a minute all
+3. Phone B: tap the link → Itinero opens and the trip appears in Trips ("Shared with you"). Within ~a minute all
    days, items, travelers and the checklist should match Phone A.
 4. Edit an item on B (mark done, change a time) → appears on A. Edit a different item on A → appears on B.
 5. Edit the same item on both while one is in airplane mode; reconnect. The most recent edit wins on both.

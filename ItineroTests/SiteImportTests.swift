@@ -1,5 +1,5 @@
 import XCTest
-@testable import TripTrac
+@testable import Itinero
 
 final class SiteImportTests: XCTestCase {
     private let roster = ["Ann", "Ben", "Cy", "Di"]

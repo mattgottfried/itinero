@@ -109,7 +109,7 @@ struct TripsView: View {
     private func importFile(at url: URL) {
         do {
             let data = try Data(contentsOf: url)
-            // A TripTrac backup restores as-is; anything else is treated as an itinerary-site export.
+            // A Itinero backup restores as-is; anything else is treated as an itinerary-site export.
             if let snapshot = try? TripSnapshot.decode(data) {
                 if let trip = snapshot.insert(into: modelContext, existing: trips) {
                     report = ImportReport(tripName: trip.name, itemCount: snapshot.items.count, warnings: [])
@@ -126,7 +126,7 @@ struct TripsView: View {
             let trip = ImportApplier.apply(parsed, into: modelContext)
             report = ImportReport(tripName: trip.name, itemCount: parsed.items.count, warnings: parsed.warnings)
         } catch {
-            importError = "The file isn't a TripTrac itinerary export. (\(error.localizedDescription))"
+            importError = "The file isn't a Itinero itinerary export. (\(error.localizedDescription))"
         }
     }
 }

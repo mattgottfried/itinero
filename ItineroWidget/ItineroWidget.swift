@@ -54,7 +54,7 @@ struct NextUpView: View {
                 Spacer(minLength: 0)
             }
         } else {
-            Text("Open TripTrac to load your trip").font(.caption).foregroundStyle(.secondary)
+            Text("Open Itinero to load your trip").font(.caption).foregroundStyle(.secondary)
         }
     }
 
@@ -74,9 +74,9 @@ struct NextUpView: View {
 
 private extension NextUpEntry { var entry: NextUpSnapshot? { snapshot } }
 
-struct TripTracWidget: Widget {
+struct ItineroWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "TripTracNextUp", provider: NextUpProvider()) { entry in
+        StaticConfiguration(kind: "ItineroNextUp", provider: NextUpProvider()) { entry in
             NextUpView(entry: entry).containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Next up")
@@ -86,6 +86,6 @@ struct TripTracWidget: Widget {
 }
 
 @main
-struct TripTracWidgetBundle: WidgetBundle {
-    var body: some Widget { TripTracWidget() }
+struct ItineroWidgetBundle: WidgetBundle {
+    var body: some Widget { ItineroWidget() }
 }
