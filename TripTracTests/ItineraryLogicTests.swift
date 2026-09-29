@@ -10,6 +10,12 @@ private struct Fake: Schedulable {
     var attendeeIDs: [UUID] = []
     var isOptional = false
     var timeZoneID = ""
+    var id = UUID()
+    var title = ""
+    var isDone = false
+    var cost: Double?
+    var currency = ""
+    var isPaid = false
 }
 
 final class ItineraryLogicTests: XCTestCase {

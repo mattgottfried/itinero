@@ -19,6 +19,10 @@ struct ItemDraft: Equatable {
     var isMustDo = false
     var cost: Double?
     var currency = ""
+    var isPaid = false
+    var isDone = false
+    var allAboardAt: Date?
+    var linkURLs: [String] = []
     var sortOrder = 0
     var attendeeIDs: Set<UUID> = []
 
@@ -41,6 +45,10 @@ struct ItemDraft: Equatable {
         isMustDo = item.isMustDo
         cost = item.cost
         currency = item.currency
+        isPaid = item.isPaid
+        isDone = item.isDone
+        allAboardAt = item.allAboardAt
+        linkURLs = item.linkURLs
         sortOrder = item.sortOrder
         attendeeIDs = Set(item.allAttendees.map(\.id))
     }
@@ -54,6 +62,7 @@ struct ItemDraft: Equatable {
         item.startsAt = startsAt
         item.endsAt = endsAt
         item.timeNote = timeNote
+        if item.place != place { item.latitude = nil; item.longitude = nil }
         item.place = place
         item.address = address
         item.confirmation = confirmation
@@ -62,6 +71,10 @@ struct ItemDraft: Equatable {
         item.isMustDo = isMustDo
         item.cost = cost
         item.currency = currency
+        item.isPaid = isPaid
+        item.isDone = isDone
+        item.allAboardAt = allAboardAt
+        item.linkURLs = linkURLs
         item.sortOrder = sortOrder
         item.timeZoneID = trip.timeZoneID
         item.trip = trip

@@ -1,7 +1,7 @@
 import Foundation
 
 enum ItemCategory: String, CaseIterable, Identifiable, Codable {
-    case flight, train, stay, activity, meal, dayTrip, themePark, rest, portDay, other
+    case flight, train, stay, activity, meal, dayTrip, themePark, rest, portDay, embark, disembark, other
     var id: String { rawValue }
 
     var label: String {
@@ -15,6 +15,8 @@ enum ItemCategory: String, CaseIterable, Identifiable, Codable {
         case .themePark: "Theme park"
         case .rest: "Free time"
         case .portDay: "Port day"
+        case .embark: "Embark"
+        case .disembark: "Disembark"
         case .other: "Other"
         }
     }
@@ -31,6 +33,8 @@ enum ItemCategory: String, CaseIterable, Identifiable, Codable {
         case .themePark: "ticket.fill"
         case .rest: "cup.and.saucer.fill"
         case .portDay: "ferry.fill"
+        case .embark: "figure.walk.arrival"
+        case .disembark: "figure.walk.departure"
         case .other: "mappin.and.ellipse"
         }
     }

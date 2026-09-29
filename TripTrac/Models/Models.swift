@@ -21,6 +21,11 @@ final class Trip {
     var kindRaw = TripKind.land.rawValue
     var notes = ""
     var timeZoneID = TimeZone.current.identifier
+    var cruiseLine = ""
+    var shipName = ""
+    var cabin = ""
+    var linkURLs: [String] = []
+    @Relationship(deleteRule: .cascade, inverse: \ChecklistItem.trip) var checklist: [ChecklistItem]? = []
     @Relationship(deleteRule: .cascade, inverse: \Day.trip) var days: [Day]? = []
     @Relationship(deleteRule: .cascade, inverse: \Traveler.trip) var travelers: [Traveler]? = []
     @Relationship(deleteRule: .cascade, inverse: \ItineraryItem.trip) var items: [ItineraryItem]? = []
@@ -40,6 +45,7 @@ final class Trip {
     var localEnd: Date { TripLogic.reanchor(endDate, from: calendar) }
     var allItems: [ItineraryItem] { items ?? [] }
     var allDays: [Day] { days ?? [] }
+    var allChecklist: [ChecklistItem] { checklist ?? [] }
     var allTravelers: [Traveler] { (travelers ?? []).sorted { ($0.team, $0.name) < ($1.team, $1.name) } }
 
     init(name: String, destination: String, startDate: Date, endDate: Date,
@@ -75,6 +81,7 @@ final class Traveler {
     var team = ""
     var trip: Trip?
     var itineraryItems: [ItineraryItem]? = []
+    @Relationship(deleteRule: .nullify, inverse: \ChecklistItem.owner) var checklistItems: [ChecklistItem]? = []
 
     init(name: String, team: String = "") {
         self.name = name
@@ -102,6 +109,13 @@ final class ItineraryItem {
     var isMustDo = false
     var cost: Double?
     var currency = ""
+    var isPaid = false
+    var isDone = false
+    var allAboardAt: Date?
+    var linkURLs: [String] = []
+    /// Cached from a place-name search; cleared whenever the place text changes.
+    var latitude: Double?
+    var longitude: Double?
     var sortOrder = 0
     var trip: Trip?
     var day: Day?
@@ -122,6 +136,22 @@ final class ItineraryItem {
         self.title = title
         self.categoryRaw = category.rawValue
         self.statusRaw = status.rawValue
+    }
+}
+
+@Model
+final class ChecklistItem {
+    var id = UUID()
+    var title = ""
+    var group = "To do"
+    var isDone = false
+    var sortOrder = 0
+    var trip: Trip?
+    var owner: Traveler?
+
+    init(title: String, group: String = "To do") {
+        self.title = title
+        self.group = group
     }
 }
 
