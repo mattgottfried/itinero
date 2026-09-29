@@ -23,7 +23,7 @@ Both are living documents: extend, don't replace.
   contains no AI model name or attribution lines.
 - **CI:** none yet. Once TestFlight builds exist, keep a cumulative "What's new / what to test" note in
   `docs/TESTFLIGHT_NOTES.md` since the last uploaded build.
-- **Bundle ID:** `com.matt.itinero`. Signing: automatic, team X796Z5UW4P. Release: `tools/release.sh` (bump `CURRENT_PROJECT_VERSION` first).
+- **Bundle ID:** `com.matt.itinero`. Signing: automatic, team X796Z5UW4P. Release: Xcode → Any iOS Device → Product → Archive (build number stamps itself — Build pre-action + post-build script in project.yml), or `tools/release.sh`.
 - **Personal data:** real itinerary data (confirmation numbers, addresses) lives in `private/` (git-ignored)
   or in the app's own store — never in committed source, fixtures, or tests. Tests use fake data.
 

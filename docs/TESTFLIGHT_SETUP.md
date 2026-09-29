@@ -16,7 +16,8 @@ writes `build/release/export/Itinero.ipa`. Uploading needs your Apple login too.
 - **Xcode**: open `Itinero.xcodeproj` → Product → Archive → Distribute App → App Store Connect → Upload.
 - **Command line** (needs an App Store Connect API key from Users and Access → Integrations → Keys):
   `ASC_KEY_PATH=… ASC_KEY_ID=… ASC_ISSUER_ID=… tools/release.sh --upload`
-- Each new upload needs a higher `CURRENT_PROJECT_VERSION` in `project.yml` (currently 1).
+- Build numbers are automatic: every build writes `build/.buildnumber` (yyMMddHHmm) and Release/Archive stamps it on
+  the app and widget, so each archive is higher than the last. Just pick **Any iOS Device** and Product → Archive.
 
 ## After it processes (~10–30 min)
 1. App Store Connect → Itinero → TestFlight → the build appears; answer the export-compliance prompt if shown

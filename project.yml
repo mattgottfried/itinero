@@ -37,6 +37,16 @@ targets:
         aps-environment: development
     dependencies:
       - target: ItineroWidget
+    postBuildScripts:
+      - name: Stamp build number (Archive only)
+        basedOnDependencyAnalysis: false
+        script: |
+          # The scheme's Archive pre-action writes build/.buildnumber once, so the app and the widget get the same
+          # number and every archive is higher than the last (App Store Connect rejects repeats).
+          BN="${SRCROOT}/build/.buildnumber"
+          if [ "${CONFIGURATION}" = "Release" ] && [ -f "$BN" ]; then
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $(cat "$BN")" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
+          fi
     sources:
       - Shared
       - Itinero
@@ -59,9 +69,20 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_ENTITLEMENTS: Itinero/Itinero.entitlements
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
   ItineroWidget:
     type: app-extension
     platform: iOS
+    postBuildScripts:
+      - name: Stamp build number (Archive only)
+        basedOnDependencyAnalysis: false
+        script: |
+          # The scheme's Archive pre-action writes build/.buildnumber once, so the app and the widget get the same
+          # number and every archive is higher than the last (App Store Connect rejects repeats).
+          BN="${SRCROOT}/build/.buildnumber"
+          if [ "${CONFIGURATION}" = "Release" ] && [ -f "$BN" ]; then
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $(cat "$BN")" "${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
+          fi
     sources:
       - Shared/NextUpSnapshot.swift
       - Shared/AppName.swift
@@ -85,6 +106,7 @@ targets:
         CURRENT_PROJECT_VERSION: 2
         TARGETED_DEVICE_FAMILY: "1,2"
         SKIP_INSTALL: YES
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
         CODE_SIGN_ENTITLEMENTS: ItineroWidget/ItineroWidget.entitlements
   ItineroTests:
     type: bundle.unit-test
@@ -101,5 +123,14 @@ schemes:
     build:
       targets:
         Itinero: all
+      # Build (not Archive) pre-action: Archive pre-actions run after the build. One file, written once per build,
+      # so the app and widget share the number; only Release builds (i.e. archives) apply it.
+      preActions:
+        - name: New build number
+          settingsTarget: Itinero
+          script: |
+            mkdir -p "${SRCROOT}/build" && date +%y%m%d%H%M > "${SRCROOT}/build/.buildnumber"
     test:
       targets: [ItineroTests]
+    archive:
+      config: Release
