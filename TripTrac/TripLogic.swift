@@ -20,4 +20,11 @@ enum TripLogic {
     static func dayCount(start: Date, end: Date, calendar: Calendar = .current) -> Int {
         max(1, (calendar.dateComponents([.day], from: calendar.startOfDay(for: start), to: calendar.startOfDay(for: end)).day ?? 0) + 1)
     }
+
+    /// A trip's start/end are calendar dates anchored at midnight in the trip's zone. For "days until"
+    /// and "is it underway" the traveler thinks in their own calendar, so re-anchor the same y/m/d there.
+    static func reanchor(_ date: Date, from tripCalendar: Calendar, to calendar: Calendar = .current) -> Date {
+        let c = tripCalendar.dateComponents([.year, .month, .day], from: date)
+        return calendar.date(from: c) ?? date
+    }
 }

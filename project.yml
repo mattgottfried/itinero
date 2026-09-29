@@ -14,7 +14,13 @@ targets:
   TripTrac:
     type: application
     platform: iOS
-    sources: [TripTrac]
+    sources:
+      - TripTrac
+      # Personal itinerary export, git-ignored. Bundled only if present on this machine.
+      - path: private
+        includes: ["japan-2026.json"]
+        optional: true
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.matt.triptrac

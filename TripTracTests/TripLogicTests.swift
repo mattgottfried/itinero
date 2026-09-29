@@ -29,4 +29,15 @@ final class TripLogicTests: XCTestCase {
         XCTAssertEqual(TripLogic.dayCount(start: date(11, 13), end: date(11, 27), calendar: cal), 15)
         XCTAssertEqual(TripLogic.dayCount(start: date(11, 13), end: date(11, 13), calendar: cal), 1)
     }
+
+    func testReanchorKeepsCalendarDayAcrossZones() {
+        var tokyo = Calendar(identifier: .gregorian); tokyo.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+        var ny = Calendar(identifier: .gregorian); ny.timeZone = TimeZone(identifier: "America/New_York")!
+        let nov13Tokyo = tokyo.date(from: DateComponents(year: 2026, month: 11, day: 13))!
+        // Tokyo midnight is still Nov 12 in New York; the traveler's countdown must target Nov 13.
+        let local = TripLogic.reanchor(nov13Tokyo, from: tokyo, to: ny)
+        XCTAssertEqual(ny.dateComponents([.month, .day], from: local).day, 13)
+        let now = ny.date(from: DateComponents(year: 2026, month: 9, day: 28, hour: 21))!
+        XCTAssertEqual(TripLogic.daysUntil(local, now: now, calendar: ny), 46)
+    }
 }
