@@ -48,6 +48,14 @@ Both are living documents: extend, don't replace.
   clears the cache. They are approximate by nature — the UI says so.
 - Trip hub tiles open sections via `TripSection` + `navigationDestination(item:)`; lists use Buttons (not tap
   gestures) so rows are real buttons for VoiceOver.
+- Phase 5: `TripSnapshot` is the portable value copy of a whole trip (JSON backup/restore, text + ICS export, and
+  the shape Phase 4 maps to CloudKit records). Restoring never overwrites an existing trip id.
+  `ReminderPlanner` (pure) plans local notifications (max 60 pending); `Services/AppSync` writes the widget feed
+  (`Shared/NextUpSnapshot.swift`, read by the `TripTracWidget` extension via the `group.com.matt.triptrac`
+  App Group) and schedules reminders every 30 s / on foreground. "I'm traveling as" (Settings) filters both.
+- Signing: automatic, team X796Z5UW4P. Capabilities (iCloud/CloudKit container `iCloud.com.matt.triptrac`, App
+  Group, push) are in `TripTrac.entitlements`; a new extension's bundle ID only registers after its parent App ID
+  exists (build the app once with `-allowProvisioningUpdates` first).
 - Views: `TripsView` (list, import), `TripDetailView` (day timeline, traveler filter chips),
   `Views/ItemEditorView`, `Views/TravelersView`, `Views/ImportReportView`.
 - Personal itinerary: `private/japan-2026.json` (git-ignored) is bundled into local builds if present and
@@ -62,4 +70,4 @@ Both are living documents: extend, don't replace.
 2. Trip-day features ✅ (needs-booking tracker, item detail, bookings wallet, issues, maps, checklist, budget, cruise fields, trip notes/links, today card, done, search, your-time)
 3. TestFlight #1 (check Xcode beta vs. release before upload)
 4. Family sharing (approach TBD: CloudKit sharing / hosted backend / read-only)
-5. Notifications, widget, share card, export
+5. Notifications, widget, share card, export ✅

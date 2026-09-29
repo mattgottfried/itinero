@@ -5,6 +5,7 @@ import Foundation
 protocol Schedulable {
     var id: UUID { get }
     var title: String { get }
+    var place: String { get }
     var isDone: Bool { get }
     var cost: Double? { get }
     var currency: String { get }

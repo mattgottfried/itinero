@@ -14,7 +14,17 @@ targets:
   TripTrac:
     type: application
     platform: iOS
+    entitlements:
+      path: TripTrac/TripTrac.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.matt.triptrac]
+        com.apple.developer.icloud-container-identifiers: [iCloud.com.matt.triptrac]
+        com.apple.developer.icloud-services: [CloudKit]
+        aps-environment: development
+    dependencies:
+      - target: TripTracWidget
     sources:
+      - Shared
       - TripTrac
       # Personal itinerary export, git-ignored. Bundled only if present on this machine.
       - path: private
@@ -32,6 +42,32 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_UIBackgroundModes: remote-notification
+        CODE_SIGN_ENTITLEMENTS: TripTrac/TripTrac.entitlements
+  TripTracWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Shared/NextUpSnapshot.swift
+      - TripTracWidget
+    entitlements:
+      path: TripTracWidget/TripTracWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.matt.triptrac]
+    info:
+      path: TripTracWidget/Info.plist
+      properties:
+        CFBundleDisplayName: TripTrac
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matt.triptrac.widget
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SKIP_INSTALL: YES
+        CODE_SIGN_ENTITLEMENTS: TripTracWidget/TripTracWidget.entitlements
   TripTracTests:
     type: bundle.unit-test
     platform: iOS
