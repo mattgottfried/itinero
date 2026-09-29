@@ -18,7 +18,7 @@ Both are living documents: extend, don't replace.
   contains no AI model name or attribution lines.
 - **CI:** none yet. Once TestFlight builds exist, keep a cumulative "What's new / what to test" note in
   `docs/TESTFLIGHT_NOTES.md` since the last uploaded build.
-- **Bundle ID:** `com.matt.triptrac`. Signing team is set at archive time (Phase 3).
+- **Bundle ID:** `com.matt.triptrac`. Signing: automatic, team X796Z5UW4P. Release: `tools/release.sh` (bump `CURRENT_PROJECT_VERSION` first).
 - **Personal data:** real itinerary data (confirmation numbers, addresses) lives in `private/` (git-ignored)
   or in the app's own store — never in committed source, fixtures, or tests. Tests use fake data.
 
@@ -76,6 +76,6 @@ Both are living documents: extend, don't replace.
 0. Foundation (repo, design system, tests) ✅
 1. Core model + Japan itinerary import ✅ (import from the public italiatrois.netlify.app page)
 2. Trip-day features ✅ (needs-booking tracker, item detail, bookings wallet, issues, maps, checklist, budget, cruise fields, trip notes/links, today card, done, search, your-time)
-3. TestFlight #1 (check Xcode beta vs. release before upload)
+3. TestFlight #1 — archive/export with distribution signing works (icon, privacy manifest, v1.0.0 build 1); the upload itself needs Matt's App Store Connect login: see docs/TESTFLIGHT_SETUP.md, `tools/release.sh`
 4. Family sharing ✅ built (CloudKit + CKSyncEngine); two-device verification pending
 5. Notifications, widget, share card, export ✅
