@@ -14,6 +14,11 @@ targets:
   TripTrac:
     type: application
     platform: iOS
+    info:
+      path: TripTrac/Info.plist
+      properties:
+        CKSharingSupported: true
+        UIBackgroundModes: [remote-notification]
     entitlements:
       path: TripTrac/TripTrac.entitlements
       properties:
@@ -42,7 +47,6 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
-        INFOPLIST_KEY_UIBackgroundModes: remote-notification
         CODE_SIGN_ENTITLEMENTS: TripTrac/TripTrac.entitlements
   TripTracWidget:
     type: app-extension

@@ -14,6 +14,7 @@ struct RootView: View {
                 guard scenePhase == .active else { return }
                 while !Task.isCancelled {
                     await AppSync.run(trips: trips)
+                    CloudSync.shared.reconcile()
                     try? await Task.sleep(for: .seconds(30))
                 }
             }

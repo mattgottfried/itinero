@@ -17,3 +17,5 @@ No build uploaded yet. Cumulative so far:
   JSON backup — restore via Trips → + → Import file).
 - Test on device: turn reminders on, add an item 2 hours from now and see the notification; add the widget and
   confirm it matches the next item; export .ics and open in Calendar; back up then delete + restore a test trip.
+- Phase 4: trip menu → Family sharing… (owner: Turn on & invite family; invitee: open the link). NEW and not yet
+  verified across two accounts — follow docs/FAMILY_SHARING_TEST.md with a test trip before using it for Japan.

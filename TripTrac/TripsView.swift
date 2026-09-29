@@ -54,10 +54,10 @@ struct TripsView: View {
             } message: { Text(importError ?? "") }
             .confirmationDialog("Delete this trip and its itinerary?", isPresented: Binding(get: { tripToDelete != nil }, set: { if !$0 { tripToDelete = nil } }), titleVisibility: .visible) {
                 Button("Delete trip", role: .destructive) {
-                    if let trip = tripToDelete { modelContext.delete(trip) }
+                    if let trip = tripToDelete { CloudSync.shared.forget(trip); modelContext.delete(trip) }
                     tripToDelete = nil
                 }
-            } message: { Text("This can't be undone.") }
+            } message: { Text("This can't be undone. If it's shared with family, their copies and the iCloud copy are not deleted.") }
         }
         .tint(AppTheme.standard.primaryColor)
     }
@@ -176,6 +176,11 @@ private struct TripRow: View {
             dimmed: past,
             accessibilityValue: "\(trip.kind.rawValue), \(trip.destination), \(dates)",
             accessibilityHint: "Open trip itinerary"
-        ) { Text(dates) }
+        ) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(dates)
+                if trip.cloudSync { Label(trip.cloudOwnerName.isEmpty ? "Synced with family" : "Shared with you", systemImage: "icloud.fill") }
+            }
+        }
     }
 }
