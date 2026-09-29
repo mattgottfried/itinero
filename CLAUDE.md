@@ -26,17 +26,30 @@ Both are living documents: extend, don't replace.
 
 - `TripTrac/DesignSystem/` — components from DESIGN.md. `StatusTone` + `statusTone(for:daysUntil:)` is the
   *only* place status→color is decided. Add new components here, with accessibility built in.
-- `TripTrac/TripLogic.swift` and other pure enums/functions — business logic, no SwiftUI/SwiftData imports,
-  unit-tested in `TripTracTests/` in the same batch of work.
-- Views: `TripsView` (list), `TripDetailView` (day timeline), `TripEditorView`.
-- Models (`Trip.swift`, SwiftData): Trip → ItineraryItem today; growing to Trip → Day → Item + Traveler
-  (per-item attendance) in Phase 1. Never delete user data as a side effect of a fix — add a flag instead.
+- `TripTrac/Logic/` and `TripLogic.swift` — pure business logic, no SwiftUI/SwiftData, unit-tested in
+  `TripTracTests/` in the same batch of work:
+  - `ItineraryLogic`: per-day ordering (by each item's *own* time zone wall clock), traveler filtering,
+    booking summary, next-up. Works on the `Schedulable` protocol so tests use plain structs.
+  - `SiteImporter`: parses the JSON export of the family itinerary web page into `ParsedTrip` and reports
+    anything odd as `ImportWarning`s instead of guessing. Format: `docs/IMPORT_FORMAT.md`.
+  - `TripLogic`: phase, countdown, day count. Trip dates are midnight in the *trip's* zone; use
+    `Trip.localStart/localEnd` (re-anchored to the device calendar) for "days until" and "underway".
+- `TripTrac/Models/` — SwiftData: Trip → Day → ItineraryItem, Trip → Traveler, item ⇄ attendees (many-to-many;
+  **empty attendees = whole group**). Schema is CloudKit-compatible on purpose (defaults everywhere, optional
+  relationships, stable `id`, no unique constraints) because Phase 4 shares trips via CloudKit.
+  `ItemDraft` is the value copy used by the editor and by delete-with-undo. `ImportApplier` writes a
+  `ParsedTrip` into the store (a trip with the same name + start date counts as already imported).
+- Views: `TripsView` (list, import), `TripDetailView` (day timeline, traveler filter chips),
+  `Views/ItemEditorView`, `Views/TravelersView`, `Views/ImportReportView`.
+- Personal itinerary: `private/japan-2026.json` (git-ignored) is bundled into local builds if present and
+  offered from the empty state. `RealItineraryTests` skips itself when the file is absent.
+- Never delete user data as a side effect of a fix — add a flag instead.
 - Never fabricate real-world facts (hours, prices, flight numbers). Verify and cite, or leave blank.
 
 ## Roadmap
 
 0. Foundation (repo, design system, tests) ✅
-1. Core model + Japan itinerary import (from italiatrois.netlify.app public page)
+1. Core model + Japan itinerary import ✅ (import from the public italiatrois.netlify.app page)
 2. Trip-day features: who's-where filter, needs-booking tracker, maps, checklist, budget, cruise support
 3. TestFlight #1 (check Xcode beta vs. release before upload)
 4. Family sharing (approach TBD: CloudKit sharing / hosted backend / read-only)
