@@ -1,4 +1,4 @@
-name: TripTrac
+name: Itinero
 options:
   bundleIdPrefix: com.matt
   deploymentTarget:
@@ -11,26 +11,26 @@ settings:
     CODE_SIGN_STYLE: Automatic
     CURRENT_PROJECT_VERSION: 1
 targets:
-  TripTrac:
+  Itinero:
     type: application
     platform: iOS
     info:
-      path: TripTrac/Info.plist
+      path: Itinero/Info.plist
       properties:
         CKSharingSupported: true
         UIBackgroundModes: [remote-notification]
     entitlements:
-      path: TripTrac/TripTrac.entitlements
+      path: Itinero/Itinero.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.matt.triptrac]
-        com.apple.developer.icloud-container-identifiers: [iCloud.com.matt.triptrac]
+        com.apple.security.application-groups: [group.com.matt.itinero]
+        com.apple.developer.icloud-container-identifiers: [iCloud.com.matt.itinero]
         com.apple.developer.icloud-services: [CloudKit]
         aps-environment: development
     dependencies:
-      - target: TripTracWidget
+      - target: ItineroWidget
     sources:
       - Shared
-      - TripTrac
+      - Itinero
       # Personal itinerary export, git-ignored. Bundled only if present on this machine.
       - path: private
         includes: ["japan-2026.json"]
@@ -38,56 +38,56 @@ targets:
         buildPhase: resources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matt.triptrac
-        PRODUCT_NAME: TripTrac
+        PRODUCT_BUNDLE_IDENTIFIER: com.matt.itinero
+        PRODUCT_NAME: Itinero
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: TripTrac
+        INFOPLIST_KEY_CFBundleDisplayName: Itinero
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
-        CODE_SIGN_ENTITLEMENTS: TripTrac/TripTrac.entitlements
-  TripTracWidget:
+        CODE_SIGN_ENTITLEMENTS: Itinero/Itinero.entitlements
+  ItineroWidget:
     type: app-extension
     platform: iOS
     sources:
       - Shared/NextUpSnapshot.swift
-      - TripTracWidget
+      - ItineroWidget
     entitlements:
-      path: TripTracWidget/TripTracWidget.entitlements
+      path: ItineroWidget/ItineroWidget.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.matt.triptrac]
+        com.apple.security.application-groups: [group.com.matt.itinero]
     info:
-      path: TripTracWidget/Info.plist
+      path: ItineroWidget/Info.plist
       properties:
-        CFBundleDisplayName: TripTrac
+        CFBundleDisplayName: Itinero
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matt.triptrac.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.matt.itinero.widget
         MARKETING_VERSION: 1.0.0
         CURRENT_PROJECT_VERSION: 1
         TARGETED_DEVICE_FAMILY: "1,2"
         SKIP_INSTALL: YES
-        CODE_SIGN_ENTITLEMENTS: TripTracWidget/TripTracWidget.entitlements
-  TripTracTests:
+        CODE_SIGN_ENTITLEMENTS: ItineroWidget/ItineroWidget.entitlements
+  ItineroTests:
     type: bundle.unit-test
     platform: iOS
-    sources: [TripTracTests]
+    sources: [ItineroTests]
     dependencies:
-      - target: TripTrac
+      - target: Itinero
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.matt.triptrac.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.matt.itinero.tests
 schemes:
-  TripTrac:
+  Itinero:
     build:
       targets:
-        TripTrac: all
+        Itinero: all
     test:
-      targets: [TripTracTests]
+      targets: [ItineroTests]

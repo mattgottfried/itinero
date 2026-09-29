@@ -35,7 +35,7 @@ struct SettingsView: View {
                     Text("Flights 3 hours ahead, trains 45 minutes, most other things an hour, and 2 hours before all-aboard. Anything not booked yet says so.")
                 }
                 if denied {
-                    Section { Text("Notifications are turned off for TripTrac. Enable them in Settings → Notifications.").font(.caption).foregroundStyle(StatusTone.caution.color) }
+                    Section { Text("Notifications are turned off for Itinero. Enable them in Settings → Notifications.").font(.caption).foregroundStyle(StatusTone.caution.color) }
                 }
             }
             .navigationTitle("Settings")

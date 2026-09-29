@@ -1,4 +1,4 @@
-# TripTrac
+# Itinero
 
 Native iOS app (SwiftUI + SwiftData, iOS 17+) for planning and tracking trips and their itineraries —
 both cruises and land trips. First real use: a 7-person family trip to Japan, Nov 13–27 2026.
@@ -8,33 +8,33 @@ Both are living documents: extend, don't replace.
 
 ## Project conventions (the `[ ]` fills from PREFERENCES.md)
 
-- **Build system:** `project.yml` (XcodeGen) is the source of truth. `TripTrac.xcodeproj` is generated and
+- **Build system:** `project.yml` (XcodeGen) is the source of truth. `Itinero.xcodeproj` is generated and
   git-ignored — run `xcodegen generate` after adding/removing files. No manual pbxproj registration.
 - **Build / test:**
-  `xcodebuild test -project TripTrac.xcodeproj -scheme TripTrac -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO`
+  `xcodebuild test -project Itinero.xcodeproj -scheme Itinero -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO`
   Claude *can* build and run in the simulator in this project — verify there, not only by reading the diff.
 - **Git:** feature branch `feature/<topic>` → PR → merge into `main`. Merge finished batches without being
   asked. New commits, never amend; never force-push shared history. Commit/PR text explains *why*, and
   contains no AI model name or attribution lines.
 - **CI:** none yet. Once TestFlight builds exist, keep a cumulative "What's new / what to test" note in
   `docs/TESTFLIGHT_NOTES.md` since the last uploaded build.
-- **Bundle ID:** `com.matt.triptrac`. Signing: automatic, team X796Z5UW4P. Release: `tools/release.sh` (bump `CURRENT_PROJECT_VERSION` first).
+- **Bundle ID:** `com.matt.itinero`. Signing: automatic, team X796Z5UW4P. Release: `tools/release.sh` (bump `CURRENT_PROJECT_VERSION` first).
 - **Personal data:** real itinerary data (confirmation numbers, addresses) lives in `private/` (git-ignored)
   or in the app's own store — never in committed source, fixtures, or tests. Tests use fake data.
 
 ## Architecture
 
-- `TripTrac/DesignSystem/` — components from DESIGN.md. `StatusTone` + `statusTone(for:daysUntil:)` is the
+- `Itinero/DesignSystem/` — components from DESIGN.md. `StatusTone` + `statusTone(for:daysUntil:)` is the
   *only* place status→color is decided. Add new components here, with accessibility built in.
-- `TripTrac/Logic/` and `TripLogic.swift` — pure business logic, no SwiftUI/SwiftData, unit-tested in
-  `TripTracTests/` in the same batch of work:
+- `Itinero/Logic/` and `TripLogic.swift` — pure business logic, no SwiftUI/SwiftData, unit-tested in
+  `ItineroTests/` in the same batch of work:
   - `ItineraryLogic`: per-day ordering (by each item's *own* time zone wall clock), traveler filtering,
     booking summary, next-up. Works on the `Schedulable` protocol so tests use plain structs.
   - `SiteImporter`: parses the JSON export of the family itinerary web page into `ParsedTrip` and reports
     anything odd as `ImportWarning`s instead of guessing. Format: `docs/IMPORT_FORMAT.md`.
   - `TripLogic`: phase, countdown, day count. Trip dates are midnight in the *trip's* zone; use
     `Trip.localStart/localEnd` (re-anchored to the device calendar) for "days until" and "underway".
-- `TripTrac/Models/` — SwiftData: Trip → Day → ItineraryItem, Trip → Traveler, item ⇄ attendees (many-to-many;
+- `Itinero/Models/` — SwiftData: Trip → Day → ItineraryItem, Trip → Traveler, item ⇄ attendees (many-to-many;
   **empty attendees = whole group**). Schema is CloudKit-compatible on purpose (defaults everywhere, optional
   relationships, stable `id`, no unique constraints) because Phase 4 shares trips via CloudKit.
   `ItemDraft` is the value copy used by the editor and by delete-with-undo. `ImportApplier` writes a
@@ -51,7 +51,7 @@ Both are living documents: extend, don't replace.
 - Phase 5: `TripSnapshot` is the portable value copy of a whole trip (JSON backup/restore, text + ICS export, and
   the shape Phase 4 maps to CloudKit records). Restoring never overwrites an existing trip id.
   `ReminderPlanner` (pure) plans local notifications (max 60 pending); `Services/AppSync` writes the widget feed
-  (`Shared/NextUpSnapshot.swift`, read by the `TripTracWidget` extension via the `group.com.matt.triptrac`
+  (`Shared/NextUpSnapshot.swift`, read by the `ItineroWidget` extension via the `group.com.matt.itinero`
   App Group) and schedules reminders every 30 s / on foreground. "I'm traveling as" (Settings) filters both.
 - Phase 4 (family sharing, opt-in per trip): SwiftData can't share across iCloud accounts, so trips are mirrored to
   CloudKit with `CKSyncEngine` (`Services/CloudSync`): one record zone per trip, records Trip/Traveler/Day/Item/Check
@@ -61,8 +61,8 @@ Both are living documents: extend, don't replace.
   whole trip; an ended share keeps the local copy; deleting a trip here tombstones it and never deletes the shared
   copy; only records previously synced can be deleted by sync. Coordinates (map-pin cache) never sync.
   **Not yet verified end-to-end** (needs two iCloud accounts on real devices) — see docs/FAMILY_SHARING_TEST.md.
-- Signing: automatic, team X796Z5UW4P. Capabilities (iCloud/CloudKit container `iCloud.com.matt.triptrac`, App
-  Group, push) are in `TripTrac.entitlements`; a new extension's bundle ID only registers after its parent App ID
+- Signing: automatic, team X796Z5UW4P. Capabilities (iCloud/CloudKit container `iCloud.com.matt.itinero`, App
+  Group, push) are in `Itinero.entitlements`; a new extension's bundle ID only registers after its parent App ID
   exists (build the app once with `-allowProvisioningUpdates` first).
 - Views: `TripsView` (list, import), `TripDetailView` (day timeline, traveler filter chips),
   `Views/ItemEditorView`, `Views/TravelersView`, `Views/ImportReportView`.

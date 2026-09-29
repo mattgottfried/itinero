@@ -1,22 +1,25 @@
-# Getting TripTrac onto TestFlight
+# Getting Itinero onto TestFlight
 
-State: the app archives and exports with **App Store distribution signing** (team X796Z5UW4P, iCloud/CloudKit,
-App Group, push, widget). `build/TripTrac-1.0.0-build1.ipa` is ready to upload. What's left needs your Apple login.
+State: the app archived and exported with **App Store distribution signing** (team X796Z5UW4P, iCloud/CloudKit,
+App Group, push, widget) under its previous name. After the rename to Itinero the new App IDs still have to be
+registered: open Xcode → Settings → Accounts and make sure your Apple ID is signed in (re-enter the password if
+asked), then run `tools/release.sh` — it registers `com.matt.itinero`, the iCloud container and the App Group, and
+writes `build/release/export/Itinero.ipa`. Uploading needs your Apple login too.
 
 ## One-time: create the app record
 1. https://appstoreconnect.apple.com → Apps → **+** → New App.
-2. Platform iOS · Name **TripTrac** (or similar if taken) · Primary language English · Bundle ID
-   **com.matt.triptrac** (it's already registered) · SKU `triptrac`.
+2. Platform iOS · Name **Itinero** (or similar if taken) · Primary language English · Bundle ID
+   **com.matt.itinero** (registered automatically by the first signed build — if it isn't in the list, run `tools/release.sh` first) · SKU `itinero`.
 
 ## Upload a build (pick one)
-- **Transporter** (Mac App Store): drag `build/TripTrac-1.0.0-build1.ipa` in → Deliver.
-- **Xcode**: open `TripTrac.xcodeproj` → Product → Archive → Distribute App → App Store Connect → Upload.
+- **Transporter** (Mac App Store): drag `build/release/export/Itinero.ipa` in → Deliver.
+- **Xcode**: open `Itinero.xcodeproj` → Product → Archive → Distribute App → App Store Connect → Upload.
 - **Command line** (needs an App Store Connect API key from Users and Access → Integrations → Keys):
   `ASC_KEY_PATH=… ASC_KEY_ID=… ASC_ISSUER_ID=… tools/release.sh --upload`
 - Each new upload needs a higher `CURRENT_PROJECT_VERSION` in `project.yml` (currently 1).
 
 ## After it processes (~10–30 min)
-1. App Store Connect → TripTrac → TestFlight → the build appears; answer the export-compliance prompt if shown
+1. App Store Connect → Itinero → TestFlight → the build appears; answer the export-compliance prompt if shown
    (the app sets "no non-exempt encryption", so it normally isn't).
 2. **Internal testing** (fastest, no review): Users and Access → invite each family member as a user (App Manager or
    Developer role isn't needed — "Marketing"/limited is fine), then TestFlight → Internal Testing → add them. They

@@ -55,10 +55,10 @@ enum ICSExporter {
     static func make(_ trip: TripSnapshot, travelerID: UUID? = nil, now: Date = .now) -> String {
         let names = Dictionary(uniqueKeysWithValues: trip.travelers.map { ($0.id, $0.name) })
         let dayByID = Dictionary(uniqueKeysWithValues: trip.days.map { ($0.id, $0) })
-        var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//TripTrac//EN", "CALSCALE:GREGORIAN",
+        var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Itinero//EN", "CALSCALE:GREGORIAN",
                      "X-WR-CALNAME:" + escape(trip.name)]
         for item in trip.items where ItineraryLogic.isVisible(item, for: travelerID) && item.status != .cancelled {
-            var event = ["BEGIN:VEVENT", "UID:\(item.id.uuidString)@triptrac", "DTSTAMP:" + utc(now)]
+            var event = ["BEGIN:VEVENT", "UID:\(item.id.uuidString)@itinero", "DTSTAMP:" + utc(now)]
             if item.category == .stay {
                 guard let day = item.dayID.flatMap({ dayByID[$0] }) else { continue }
                 event.append("DTSTART;VALUE=DATE:" + dateOnly(day.date, trip.calendar))

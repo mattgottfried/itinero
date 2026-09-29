@@ -1,5 +1,5 @@
 import XCTest
-@testable import TripTrac
+@testable import Itinero
 
 final class Phase5LogicTests: XCTestCase {
     private let us = Locale(identifier: "en_US")

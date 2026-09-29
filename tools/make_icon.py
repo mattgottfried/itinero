@@ -1,4 +1,4 @@
-"""Generates the TripTrac app icon (1024x1024, opaque). Run: python3 tools/make_icon.py"""
+"""Generates the Itinero app icon (1024x1024, opaque). Run: python3 tools/make_icon.py"""
 from PIL import Image, ImageDraw
 import math
 
@@ -32,5 +32,5 @@ d.ellipse((cx - r * 0.42, cy - r * 0.42, cx + r * 0.42, cy + r * 0.42), fill=(34
 # start dot
 d.ellipse((330 - 60, 1560 - 60, 330 + 60, 1560 + 60), fill=(255, 255, 255, 255))
 
-img.resize((1024, 1024), Image.LANCZOS).save("TripTrac/Assets.xcassets/AppIcon.appiconset/icon-1024.png")
+img.resize((1024, 1024), Image.LANCZOS).save("Itinero/Assets.xcassets/AppIcon.appiconset/icon-1024.png")
 print("wrote icon")

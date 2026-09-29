@@ -30,7 +30,7 @@ enum CloudApply {
 
     static func upsert(_ t: TripSnapshot.Traveler, into trip: Trip, context: ModelContext) {
         let m = trip.allTravelers.first { $0.id == t.id } ?? {
-            let n = TripTrac.Traveler(name: t.name, team: t.team)
+            let n = Itinero.Traveler(name: t.name, team: t.team)
             n.id = t.id; n.trip = trip
             context.insert(n)
             return n
@@ -40,7 +40,7 @@ enum CloudApply {
 
     static func upsert(_ d: TripSnapshot.Day, into trip: Trip, context: ModelContext) {
         let m = trip.allDays.first { $0.id == d.id } ?? {
-            let n = TripTrac.Day(date: d.date, title: d.title)
+            let n = Itinero.Day(date: d.date, title: d.title)
             n.id = d.id; n.trip = trip
             context.insert(n)
             return n

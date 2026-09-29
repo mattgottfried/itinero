@@ -186,7 +186,7 @@ struct HeroCard<Footer: View>: View {
                 }
             }
             footer().font(.subheadline.weight(.medium)).foregroundStyle(.white)
-            HStack { Spacer(); Text("TripTrac").font(.caption2.weight(.bold)).foregroundStyle(.white.opacity(0.6)) }
+            HStack { Spacer(); Text("Itinero").font(.caption2.weight(.bold)).foregroundStyle(.white.opacity(0.6)) }
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)

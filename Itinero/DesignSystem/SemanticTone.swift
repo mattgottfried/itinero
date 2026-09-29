@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// What a color *means* in TripTrac. Every colored badge/tile maps through `StatusTone`,
+/// What a color *means* in Itinero. Every colored badge/tile maps through `StatusTone`,
 /// never an inline `Color`, so a status looks identical on every screen (see DESIGN.md).
 enum StatusTone: Equatable {
     case good      // booked, done

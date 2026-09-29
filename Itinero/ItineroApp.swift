@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct TripTracApp: App {
+struct ItineroApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     let container: ModelContainer
 

@@ -1,6 +1,6 @@
 import XCTest
 import CloudKit
-@testable import TripTrac
+@testable import Itinero
 
 final class CloudRecordsTests: XCTestCase {
     private let tripID = UUID(), ann = UUID(), dayID = UUID(), itemID = UUID(), checkID = UUID()

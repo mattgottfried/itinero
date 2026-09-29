@@ -1,6 +1,6 @@
 # Itinerary import format
 
-TripTrac imports a trip from one JSON file (Trips screen → + → Import itinerary file…).
+Itinero imports a trip from one JSON file (Trips screen → + → Import itinerary file…).
 
 ```json
 {
