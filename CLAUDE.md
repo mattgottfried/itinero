@@ -15,9 +15,6 @@ Both are living documents: extend, don't replace.
 
 - **Build system:** `project.yml` (XcodeGen) is the source of truth. `Itinero.xcodeproj` is generated and
   git-ignored — run `xcodegen generate` after adding/removing files. No manual pbxproj registration.
-- **Xcode Cloud:** `ci_scripts/ci_post_clone.sh` installs XcodeGen and generates the project on the runner (the
-  `.xcodeproj` is git-ignored). The git-ignored `private/japan-2026.json` is not in cloud builds, so a cloud/TestFlight
-  build starts empty: import the itinerary from the JSON file (AirDrop → Trips → + → Import file).
 - **Build / test:**
   `xcodebuild test -project Itinero.xcodeproj -scheme Itinero -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO`
   Claude *can* build and run in the simulator in this project — verify there, not only by reading the diff.
